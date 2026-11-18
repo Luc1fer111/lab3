@@ -1,0 +1,472 @@
+/* ===== 1. Змінні (дизайн-токени) ===== */
+:root {
+  --color-bg: #f2f6f6;
+  --color-surface: #ffffff;
+  --color-text: #1b2a2c;
+  --color-muted: #4a5d60;
+  --color-border: #cbd8d9;
+  --color-accent: #1d5c63;
+  --color-on-accent: #ffffff;
+  --color-focus: #b4552d;
+  --color-shadow: rgba(0, 0, 0, 0.15);
+
+  --gap: 1rem;
+  --gap-sm: 0.5rem;
+  --gap-lg: 1.5rem;
+  --radius: 0.5rem;
+  --border: 1px solid var(--color-border);
+  --sidebar-width: 12.5rem;
+  --content-max: 87.5rem;
+
+  --font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --fs-small: 0.875rem;
+  --fs-base: 1rem;
+  --fs-title: 1.25rem;
+  --fs-h1: clamp(1.5rem, 0.9rem + 2vw, 2.25rem);
+  --lh-base: 1.5;
+}
+
+/* Темна тема на основі тих самих змінних */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0f1819;
+    --color-surface: #182527;
+    --color-text: #e6eeef;
+    --color-muted: #a9bcbf;
+    --color-border: #31464a;
+    --color-accent: #6cc3cc;
+    --color-on-accent: #0f1819;
+    --color-focus: #f2a37b;
+    --color-shadow: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ===== 2. Базові стилі ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--color-bg); }
+
+/* ===== 3. Каркас сторінки (Grid, mobile first) ===== */
+.page {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "aside"
+    "main"
+    "footer";
+  min-height: 100vh;
+  gap: var(--gap);
+  margin: 0;
+  padding: var(--gap);
+  font-family: var(--font-family);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  color: var(--color-text);
+}
+
+.header { grid-area: header; }
+.aside  { grid-area: aside; }
+.main   { grid-area: main; min-width: 0; }
+.footer { grid-area: footer; }
+
+/* ===== 4. Шапка і навігація (Flexbox) ===== */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--gap);
+  padding: var(--gap);
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.header__logo {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.nav { flex: 1 1 auto; }
+
+.nav__list {
+  display: flex;
+  flex-direction: column; /* мобільна версія: вертикальний список */
+  gap: var(--gap-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav__link {
+  display: block;
+  padding: var(--gap-sm) var(--gap);
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav__link:hover,
+.nav__link:focus-visible {
+  transform: translateY(-2px);
+  opacity: 0.75;
+}
+
+.nav__link--active {
+  font-weight: 700;
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+}
+
+/* ===== 5. Кнопки ===== */
+.button {
+  padding: var(--gap-sm) var(--gap);
+  font: inherit;
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-2px);
+  opacity: 0.85;
+}
+
+.button--ghost {
+  color: var(--color-accent);
+  background: transparent;
+}
+
+.button--wide { width: 100%; }
+
+/* ===== 6. Бічна панель з фільтрами ===== */
+.aside {
+  align-self: start;
+  padding: var(--gap);
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.filters {
+  display: grid;
+  gap: var(--gap);
+}
+
+.filters__group {
+  display: grid;
+  gap: var(--gap-sm);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.filters__title {
+  padding: 0;
+  margin-bottom: var(--gap-sm);
+  font-weight: 700;
+}
+
+.filters__option {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  font-size: var(--fs-small);
+}
+
+/* ===== 7. Основна область ===== */
+.main__title {
+  margin: 0 0 var(--gap-sm);
+  font-size: var(--fs-h1);
+  line-height: 1.2;
+}
+
+.main__lead {
+  margin: 0 0 var(--gap-lg);
+  color: var(--color-muted);
+}
+
+/* Адаптивна галерея без медіа-запитів */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13.75rem, 1fr));
+  gap: var(--gap);
+}
+
+/* ===== 8. Картка (BEM) ===== */
+.card {
+  display: grid;
+  align-content: start;
+  gap: var(--gap-sm);
+  padding: var(--gap);
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px);
+}
+
+.card__image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.card__title {
+  margin: 0;
+  font-size: var(--fs-title);
+  line-height: 1.25;
+}
+
+.card__text {
+  margin: 0;
+  font-size: var(--fs-small);
+  color: var(--color-muted);
+}
+
+.card__link {
+  align-self: end;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.card--featured { border-color: var(--color-accent); }
+
+/* ===== 9. Підвал ===== */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+  padding: var(--gap);
+  font-size: var(--fs-small);
+  color: var(--color-muted);
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.footer__text { margin: 0; }
+.footer__link { color: var(--color-accent); }
+
+/* ===== 10. Доступність ===== */
+.nav__link:focus-visible,
+.button:focus-visible,
+.card__link:focus-visible,
+.header__logo:focus-visible,
+.footer__link:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* ===== 11. Точки перелому (mobile first) ===== */
+@media (min-width: 48em) { /* від 768 px */
+  .page {
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-areas:
+      "header header"
+      "aside  main"
+      "footer footer";
+  }
+
+  .header {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .nav { display: flex; justify-content: center; }
+  .nav__list { flex-direction: row; }
+}
+
+@media (min-width: 75em) { /* від 1200 px */
+  .page {
+    --sidebar-width: 15rem;
+    --gap: 1.5rem;
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+}
+
+/* ===== 12. Зменшення анімації ===== */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .nav__link,
+  .button { transition: none; }
+}
+
+/* ===== Лабораторна робота №3: форма, список, підсумки ===== */
+:root {
+  --color-danger: #b3261e;
+  --color-selected: rgba(29, 92, 99, 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-danger: #ff8a80;
+    --color-selected: rgba(108, 195, 204, 0.16);
+  }
+}
+
+.field {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.field__label { font-size: var(--fs-small); font-weight: 600; }
+
+.field__input {
+  width: 100%;
+  min-width: 0;
+  padding: var(--gap-sm);
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.field__input[aria-invalid="true"] { border-color: var(--color-danger); }
+
+.field__error {
+  min-height: 1.25rem;
+  font-size: var(--fs-small);
+  color: var(--color-danger);
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0 var(--gap);
+  align-items: start;
+  margin-bottom: var(--gap-lg);
+  padding: var(--gap);
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.form__title { grid-column: 1 / -1; margin: 0 0 var(--gap-sm); font-size: var(--fs-title); }
+.form__submit { grid-column: 1 / -1; justify-self: start; }
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--gap);
+  margin: 0 0 var(--gap-lg);
+}
+
+.summary__item {
+  padding: var(--gap-sm) var(--gap);
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.summary__term { margin: 0; font-size: var(--fs-small); color: var(--color-muted); }
+.summary__value { margin: 0; font-size: var(--fs-title); font-weight: 700; }
+
+.list {
+  display: grid;
+  gap: var(--gap-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list__empty {
+  padding: var(--gap);
+  color: var(--color-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap);
+  padding: var(--gap);
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.item--selected { background: var(--color-selected); border-color: var(--color-accent); }
+.item--editing { align-items: flex-start; }
+
+.item__check { width: 1.25rem; height: 1.25rem; accent-color: var(--color-accent); }
+.item__info { flex: 1 1 12rem; min-width: 0; }
+.item__title { margin: 0; font-size: var(--fs-title); line-height: 1.25; }
+.item__meta { margin: 0; font-size: var(--fs-small); color: var(--color-muted); }
+
+.item__edit {
+  display: grid;
+  flex: 1 1 18rem;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0 var(--gap);
+}
+
+.item__actions { display: flex; flex-wrap: wrap; gap: var(--gap-sm); }
+
+.button--danger { color: var(--color-danger); border-color: var(--color-danger); background: transparent; }
+.button--small { padding: 0.25rem var(--gap-sm); font-size: var(--fs-small); }
+
+.toolbar { display: grid; gap: var(--gap); }
+.toolbar__title { margin: 0; font-size: var(--fs-title); }
+
+.note { margin: 0; font-size: var(--fs-small); color: var(--color-muted); }
+
+.report {
+  display: grid;
+  gap: var(--gap-sm);
+  padding: var(--gap);
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.report__status { margin: 0; font-weight: 700; }
+.report__status--fail { color: var(--color-danger); }
+
+.log {
+  margin: 0;
+  padding: var(--gap-sm) var(--gap);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: var(--fs-small);
+  list-style: none;
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: var(--gap);
+}
+
+.text { margin: 0 0 var(--gap); max-width: 70ch; }
+.text__list { margin: 0 0 var(--gap); padding-left: var(--gap-lg); }
