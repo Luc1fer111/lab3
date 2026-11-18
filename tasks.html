@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Задачі — ЛР №3</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="page">
+
+  <header class="header">
+    <a class="header__logo" href="index.html">Глина і Вогонь</a>
+    <nav class="nav" aria-label="Головна навігація">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="index.html">Каталог</a></li>
+        <li class="nav__item"><a class="nav__link nav__link--active" href="tasks.html" aria-current="page">Задачі</a></li>
+        <li class="nav__item"><a class="nav__link" href="strict.html">Строгий режим</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+    <h1 class="main__title">Власні реалізації вбудованих можливостей</h1>
+    <p class="text">Відкрийте консоль браузера (F12). Кожен файл у js/tasks виконує серію перевірок console.assert: у разі збою в консолі з’являється повідомлення, а лічильник нижче показує загальний результат.</p>
+    <ul class="text__list">
+      <li>custom map, filter, reduce, find</li>
+      <li>custom flat(depth) і deepClone</li>
+      <li>debounce і throttle з підрахунком викликів</li>
+    </ul>
+    <section class="report" aria-live="polite">
+      <p class="report__status" id="report-status">Перевірки виконуються…</p>
+      <ul class="log" id="report-log"></ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__text">© 2026 Глина і Вогонь. Лабораторна робота №3.</p>
+  </footer>
+
+  <script src="js/tasks/report.js" defer></script>
+  <script src="js/tasks/map.js" defer></script>
+  <script src="js/tasks/filter.js" defer></script>
+  <script src="js/tasks/reduce.js" defer></script>
+  <script src="js/tasks/find.js" defer></script>
+  <script src="js/tasks/flat.js" defer></script>
+  <script src="js/tasks/deepClone.js" defer></script>
+  <script src="js/tasks/debounce.js" defer></script>
+</body>
+</html>

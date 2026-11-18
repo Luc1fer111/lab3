@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Глина і Вогонь — каталог (ЛР №3)</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="page">
+
+  <header class="header">
+    <a class="header__logo" href="index.html">Глина і Вогонь</a>
+    <nav class="nav" aria-label="Головна навігація">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link nav__link--active" href="index.html" aria-current="page">Каталог</a></li>
+        <li class="nav__item"><a class="nav__link" href="tasks.html">Задачі</a></li>
+        <li class="nav__item"><a class="nav__link" href="strict.html">Строгий режим</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <aside class="aside" aria-label="Пошук і сортування">
+    <form class="toolbar" id="filters" novalidate>
+      <h2 class="toolbar__title">Відбір</h2>
+      <label class="field">
+        <span class="field__label">Пошук за назвою</span>
+        <input class="field__input" id="search" type="search" placeholder="Наприклад, кухоль" autocomplete="off">
+      </label>
+      <label class="field">
+        <span class="field__label">Стан</span>
+        <select class="field__input" id="status">
+          <option value="all">Усі</option>
+          <option value="selected">Обрані</option>
+          <option value="unselected">Не обрані</option>
+        </select>
+      </label>
+      <label class="field">
+        <span class="field__label">Впорядкування</span>
+        <select class="field__input" id="sort">
+          <option value="name">За назвою (А–Я)</option>
+          <option value="price-asc">Ціна: за зростанням</option>
+          <option value="price-desc">Ціна: за спаданням</option>
+          <option value="total-desc">Вартість позиції</option>
+        </select>
+      </label>
+      <button class="button button--danger" id="clear" type="button">Очистити сховище</button>
+      <p class="note">Дані зберігаються в localStorage браузера.</p>
+    </form>
+  </aside>
+
+  <main class="main">
+    <h1 class="main__title">Каталог товарів</h1>
+    <p class="main__lead">Додавайте позиції, редагуйте ціну й кількість, обирайте та видаляйте їх.</p>
+
+    <dl class="summary" aria-label="Підсумки">
+      <div class="summary__item"><dt class="summary__term">Усього позицій</dt><dd class="summary__value" data-summary="total">0</dd></div>
+      <div class="summary__item"><dt class="summary__term">Обрано</dt><dd class="summary__value" data-summary="selected">0</dd></div>
+      <div class="summary__item"><dt class="summary__term">Показано</dt><dd class="summary__value" data-summary="shown">0</dd></div>
+      <div class="summary__item"><dt class="summary__term">Вартість показаних</dt><dd class="summary__value" data-summary="cost">0.00 ₴</dd></div>
+    </dl>
+
+    <form class="form" id="add-form" novalidate>
+      <h2 class="form__title">Нова позиція</h2>
+      <div class="field">
+        <label class="field__label" for="add-name">Назва</label>
+        <input class="field__input" id="add-name" name="name" type="text" required minlength="2" maxlength="60" aria-describedby="add-name-error">
+        <span class="field__error" id="add-name-error" role="alert"></span>
+      </div>
+      <div class="field">
+        <label class="field__label" for="add-price">Ціна, ₴</label>
+        <input class="field__input" id="add-price" name="price" type="number" required min="0.01" step="0.01" aria-describedby="add-price-error">
+        <span class="field__error" id="add-price-error" role="alert"></span>
+      </div>
+      <div class="field">
+        <label class="field__label" for="add-qty">Кількість</label>
+        <input class="field__input" id="add-qty" name="qty" type="number" required min="0" step="1" aria-describedby="add-qty-error">
+        <span class="field__error" id="add-qty-error" role="alert"></span>
+      </div>
+      <button class="button form__submit" type="submit">Додати</button>
+    </form>
+
+    <ul class="list" id="list" aria-live="polite"></ul>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__text">© 2026 Глина і Вогонь. Лабораторна робота №3.</p>
+  </footer>
+
+  <script src="js/storage.js" defer></script>
+  <script src="js/render.js" defer></script>
+  <script src="js/events.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

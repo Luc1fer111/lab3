@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Строгий режим — ЛР №3</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="page">
+
+  <header class="header">
+    <a class="header__logo" href="index.html">Глина і Вогонь</a>
+    <nav class="nav" aria-label="Головна навігація">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="index.html">Каталог</a></li>
+        <li class="nav__item"><a class="nav__link" href="tasks.html">Задачі</a></li>
+        <li class="nav__item"><a class="nav__link nav__link--active" href="strict.html" aria-current="page">Строгий режим</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+    <h1 class="main__title">Строгий і нестрогий режими</h1>
+    <p class="text">Два класичні сценарії виконують однакові фрагменти: js/strict-on.js з директивою "use strict", js/strict-off.js – без неї. Результати виводяться нижче та в консоль.</p>
+    <div class="columns">
+      <section>
+        <h2 class="toolbar__title">Зі строгим режимом</h2>
+        <ul class="log" id="log-on"></ul>
+      </section>
+      <section>
+        <h2 class="toolbar__title">Без директиви</h2>
+        <ul class="log" id="log-off"></ul>
+      </section>
+    </div>
+    <p class="note">Помилки розбору (with, 010, однакові параметри) отримано через new Function у try…catch: сценарій із такою конструкцією в тексті файлу не завантажився б узагалі.</p>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__text">© 2026 Глина і Вогонь. Лабораторна робота №3.</p>
+  </footer>
+
+  <script src="js/strict-on.js" defer></script>
+  <script src="js/strict-off.js" defer></script>
+</body>
+</html>
